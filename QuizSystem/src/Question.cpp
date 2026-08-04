@@ -1,4 +1,4 @@
-#include "Question.h"
+#include "..include/Question.h"
 
 using namespace std;
 Question::Question(int id, const string& prompt, int points)
