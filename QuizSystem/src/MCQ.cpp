@@ -1,4 +1,4 @@
-#include "..include/MCQ.h"
+#include "../include/MCQ.h"
 #include <iostream>
 
 using namespace std;
