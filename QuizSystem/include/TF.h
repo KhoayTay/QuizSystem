@@ -1,13 +1,15 @@
 #pragma once
-#include "../include/Question.h"
+#include "Question.h"
 #include <string>
 
 class TF : public Question {
 private:
-    bool correctAnswer;//true,false
+    bool correctAnswer;
 
 public:
-    TF(int id, const std::string& prompt, int points, bool correctAnswer);
+    TF(int id, const std::string& prompt, int points, const std::string& correctAnswerStr);
+    ~TF() override = default;
+
     void display() const override;
     bool checkAnswer(const std::string& answer) const override;
 };
