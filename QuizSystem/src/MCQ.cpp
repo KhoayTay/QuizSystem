@@ -1,6 +1,6 @@
 #include "../include/MCQ.h"
 #include <iostream>
-
+#include <cctype>
 using namespace std;
 MCQ::MCQ(int id, const string& prompt, int points, const string& options, char correctOption)
     : Question(id, prompt, points), options(options), correctOption(correctOption) {
