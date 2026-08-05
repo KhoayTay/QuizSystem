@@ -14,9 +14,17 @@ QuestionBank::~QuestionBank() {
     questions.clear();
 }
 
+// ============================================================================
+//  KIEM TRA ID DA TON TAI CHUA
+// ============================================================================
+
 bool QuestionBank::existsId(int id) const {
     return indexId(id) != -1;
 }
+
+// ============================================================================
+//  TIM VI TRI CUA ID
+// ============================================================================
  
 int QuestionBank::indexId(int id) const {
     for (size_t i = 0; i < questions.size(); ++i) {
