@@ -1,4 +1,4 @@
-#include "QuizManager.h"
+#include "../include/QuizManager.h"
 
 #include <algorithm>
 #include <ostream>

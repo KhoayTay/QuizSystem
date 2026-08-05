@@ -44,11 +44,19 @@ ParsedQuestion parseQuestion(const string& line)
 			question.options.push_back(token);
 		}
 
-		question.correctAnswer = parts[5];
+		stringstream correctStream(parts[5]);
+		while (getline(correctStream, token, ';'))
+		{
+			question.correctAnswers.push_back(token);
+		}
 	}
 	else if (question.type == "TF")
 	{
-		question.correctAnswer = parts[4];
+		stringstream correctStream(parts[4]);
+		while (getline(correctStream, token, ';'))
+		{
+			question.correctAnswers.push_back(token);
+		}
 	}
 
 	return question;
@@ -82,7 +90,7 @@ ParsedQuiz parseQuiz(const string& line)
 	quiz.title = parts[1];
 
 	stringstream qidStream(parts[2]);
-	while (getline(qidStream, token, ';'))
+	while (getline(qidStream, token, ','))
 	{
 		try {
 			quiz.questionIDs.push_back(std::stoi(token));
@@ -158,16 +166,25 @@ void DataFileManager::saveQuestions(const std::string& filename, const std::vect
 		if (question.type == "MCQ")
 		{
 			file << "MCQ|" << question.id << "|" << question.points << "|" << question.prompt << "|";
+			// ghi các lựa chọn
 			for (size_t i = 0; i < question.options.size(); i++)
 			{
 				file << question.options[i];
 				if (i < question.options.size() - 1) file << ";";
 			}
-			file << "|" << question.correctAnswer << endl;
+			file << "|";
+			// ghi các đáp án đúng (có thể nhiều)
+			for (size_t i = 0; i < question.correctAnswers.size(); i++)
+			{
+				file << question.correctAnswers[i];
+				if (i < question.correctAnswers.size() - 1) file << ";";
+			}
+			file << endl;
 		}
 		else if (question.type == "TF")
 		{
-			file << "TF|" << question.id << "|" << question.points << "|" << question.prompt << "|" << question.correctAnswer << endl;
+			file << "TF|" << question.id << "|" << question.points << "|"
+				<< question.prompt << "|" << question.correctAnswers[0] << endl;
 		}
 	}
 
@@ -190,7 +207,7 @@ void DataFileManager::saveQuizzes(const std::string& filename, const std::vector
 		for (size_t i = 0; i < quiz.questionIDs.size(); i++)
 		{
 			file << quiz.questionIDs[i];
-			if (i < quiz.questionIDs.size() - 1) file << ";";
+			if (i < quiz.questionIDs.size() - 1) file << ",";
 		}
 
 		file << endl;

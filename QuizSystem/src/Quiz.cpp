@@ -1,4 +1,4 @@
-#include "Quiz.h"
+#include "../include/Quiz.h"
 
 #include <algorithm>
 #include <cctype>
@@ -96,6 +96,7 @@ bool Quiz::isValidTitle(const std::string& title) {
         && normalized.find_first_of("|,;") == std::string::npos;
 }
 
+// xóa khoảng trắng đầu và cuối của title
 std::string Quiz::normalizeTitle(const std::string& title) {
     std::string::const_iterator first = std::find_if(
         title.begin(), title.end(),

@@ -4,15 +4,19 @@
 #include <string>
 #include <vector>
 
+//MCQ|id|points|prompt|optionA;optionB;optionC;optionD|correctOption
+//TF | id | points | prompt | correctAnswer
+
 struct ParsedQuestion {
 	std::string type;
 	int id;
 	int points;
 	std::string prompt;
 	std::vector<std::string> options;		//MCQ only
-	std::string correctAnswer;
+	std::vector<std::string> correctAnswers;
 };
 
+//quizId|title|questionId1,questionId2,...
 struct ParsedQuiz {
 	int quizID;
 	std::string title;
