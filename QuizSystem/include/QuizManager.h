@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Quiz.h"
+#include "DataFileManager.h"
 
 #include <cstddef>
 #include <iosfwd>
@@ -9,10 +10,11 @@
 
 class QuizManager {
 public:
+    bool loadFromFile(const std::string& filename);
+    void saveToFile(const std::string& filename) const; 
     bool create(int quizId, const std::string& title);
     bool rename(int quizId, const std::string& newTitle);
     bool remove(int quizId);
-
     void display(std::ostream& output) const;
 
     const Quiz* findQuizById(int quizId) const;
