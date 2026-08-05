@@ -2,18 +2,21 @@
 #include <iostream>
 
 using namespace std;
-
-MCQ::MCQ(int id, const string& prompt, int points,
-    const string& optA, const string& optB,
-    const string& optC, const string& optD,
-    char correctOption)
-    : Question(id, prompt, points), correctOption(correctOption) { // ABCD to MCQ.h
-    
+MCQ::MCQ(int id, const string& prompt, int points, const string& options, char correctOption)
+    : Question(id, prompt, points), options(options), correctOption(correctOption) {
 }
 void MCQ::display() const {
-  
+    cout << "Câu " << getId() << ": " << prompt << " (" << getPoints() << " diem)\n";
+    cout << options << "\n";
 }
-
 bool MCQ::checkAnswer(const string& answer) const {
-    return false; 
+    //không nhập gì sẽ tính là false
+    if (answer.empty()) return false;
+    //So sánh Answer với char correctoption trả về gtri tương ứng
+    if (toupper(answer[0]) == toupper(correctOption)) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
