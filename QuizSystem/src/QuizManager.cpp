@@ -1,4 +1,4 @@
-#include "../include/QuizManager.h"
+#include "QuizManager.h"
 
 #include <algorithm>
 #include <ostream>
@@ -78,10 +78,6 @@ void QuizManager::display(std::ostream& output) const {
 
     for (std::size_t index = 0; index < quizzes_.size(); ++index) {
         quizzes_[index].display(output);
-
-        if (index + 1 < quizzes_.size()) {
-            output << '\n';
-        }
     }
 }
 
@@ -221,4 +217,41 @@ bool QuizManager::fail(const std::string& message) {
 
 void QuizManager::clearError() {
     lastError_.clear();
+}
+bool QuizManager::loadFromFile(const std::string& filename) {
+    clearError();
+
+    std::vector<ParsedQuiz> parsedQuizzes =
+        DataFileManager::loadQuizzes(filename);
+
+    quizzes_.clear();
+
+    for (const ParsedQuiz& parsedQuiz : parsedQuizzes) {
+        if (!create(parsedQuiz.quizID, parsedQuiz.title)) {
+            return false;
+        }
+
+        for (int questionId : parsedQuiz.questionIDs) {
+            if (!addQuestion(parsedQuiz.quizID, questionId)) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+void QuizManager::saveToFile(const std::string& filename) const {
+    std::vector<ParsedQuiz> parsedQuizzes;
+
+    for (const Quiz& quiz : quizzes_) {
+        ParsedQuiz parsedQuiz{};
+
+        parsedQuiz.quizID = quiz.getId();
+        parsedQuiz.title = quiz.getTitle();
+        parsedQuiz.questionIDs = quiz.getQuestionIds();
+
+        parsedQuizzes.push_back(parsedQuiz);
+    }
+
+    DataFileManager::saveQuizzes(filename, parsedQuizzes);
 }
