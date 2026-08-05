@@ -19,4 +19,10 @@ public:
     //QuizEngine
     int getId() const;
     int getPoints() const;
+    //Getter
+    std::string getPrompt() const;
+
+    //Setter
+    void setPrompt(const std::string& newPrompt);
+    void setPoints(int newPoints);
 };
