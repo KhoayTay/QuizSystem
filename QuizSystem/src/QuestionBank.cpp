@@ -5,17 +5,6 @@
 using namespace std;
  
 namespace {
-    // Parse "true"/"false" -> bool, khong phan biet hoa/thuong
-    bool parseBoolString(const string& text, bool& ok) {
-        string lower = text;
-        transform(lower.begin(), lower.end(), lower.begin(),
-                  [](unsigned char c) { return tolower(c); });
-        if (lower == "true")  { ok = true;  return true; }
-        if (lower == "false") { ok = true;  return false; }
-        ok = false;
-        return false;
-    }
- 
     string toLowerStr(const string& text) {
         string result = text;
         transform(result.begin(), result.end(), result.begin(),
@@ -95,7 +84,7 @@ bool QuestionBank::addMCQ(int id, const string& prompt, int points,
  
 // Them TF
 bool QuestionBank::addTF(int id, const string& prompt, int points,
-                          bool correctAnswer, string& errorMsg) {
+                          const string& correctAnswer, string& errorMsg) {
     if (static_cast<int>(questions.size()) >= MAX_QUESTIONS) {
         errorMsg = "Da dat gioi han " + to_string(MAX_QUESTIONS) + " cau hoi.";
         return false;
@@ -116,9 +105,8 @@ bool QuestionBank::addTF(int id, const string& prompt, int points,
         errorMsg = "Points phai lon hon 0.";
         return false;
     }
- 
-    // TF.h nhan string thay vi bool chuyen doi truoc khi tao object
-    questions.push_back(new TF(id, prompt, points, correctAnswer ? "true" : "false"));
+
+    questions.push_back(new TF(id, prompt, points, correctAnswer));
     return true;
 }
  
@@ -197,14 +185,7 @@ int QuestionBank::loadFromFile(const string& filename, vector<string>& warnings)
                                     ": thieu correctAnswer, bo qua.");
                 continue;
             }
-            bool ok = false;
-            bool value = parseBoolString(pq.correctAnswers[0], ok);
-            if (!ok) {
-                warnings.push_back("ID " + to_string(pq.id) +
-                                    ": correctAnswer phai la true/false, bo qua.");
-                continue;
-            }
-            added = addTF(pq.id, pq.prompt, pq.points, value, errorMsg);
+            added = addTF(pq.id, pq.prompt, pq.points, pq.correctAnswers[0], errorMsg);
  
         } else {
             warnings.push_back("ID " + to_string(pq.id) +
@@ -221,4 +202,3 @@ int QuestionBank::loadFromFile(const string& filename, vector<string>& warnings)
  
     return loadedCount;
 }
- 
