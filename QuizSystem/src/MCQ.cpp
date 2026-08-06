@@ -1,17 +1,9 @@
 #include "../include/MCQ.h"
 #include <iostream>
-#include <cctype>//cho hàm toupper kiểu in hoa-thường
 
 using namespace std;
-MCQ::MCQ(int id, const string& prompt, int points, const vector<string>& options, const string& correctOptionStr)
-    : Question(id, prompt, points), options(options) {
-    if (!correctOptionStr.empty()) {
-        correctOption = toupper(correctOptionStr[0]);
-    }
-    else {
-        correctOption = 'A';
-    }
-}
+MCQ::MCQ(int id, const string& prompt, int points, const vector<string>& options, const string& correctAnswerStr)
+    : Question(id, prompt, points, correctAnswerStr), options(options) {}
 
 void MCQ::display() const {
     cout << "Câu " << getId() << ": " << prompt << " (" << getPoints() << " diem)\n";
@@ -22,15 +14,7 @@ void MCQ::display() const {
     }
     cout << "\n";
 }
-
-bool MCQ::checkAnswer(const string& answer) const {
-
-    if (answer.empty()) return false;
-
-    if (toupper(answer[0]) == correctOption) {
-        return true;
-    }
-    else {
-        return false;
-    }
+//getter
+vector<string> MCQ::getOptions() const {
+    return options;
 }
