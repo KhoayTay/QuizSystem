@@ -8,13 +8,15 @@
 #include <string>
 #include <vector>
 
-enum class AttemptState {
+enum class AttemptState
+{
     NOT_STARTED,
     IN_PROGRESS,
     SUBMITTED
 };
 
-class QuizEngine {
+class QuizEngine
+{
 public:
     QuizEngine();
 
@@ -26,6 +28,7 @@ public:
 
     void displayCurrentQuestion() const;
     void displayResult() const;
+    bool pickAQuiz(const std::string& quizzesFile, const std::string& questionsFile);
 
     AttemptState getState() const;
     int getScore() const;
@@ -34,6 +37,7 @@ public:
 
 private:
     bool hasCurrentQuestion() const;
+    bool isCorrectAnswer(const std::string& userAnswer, const std::string& correctAnswer) const;
     void reset();
 
     AttemptState state_;

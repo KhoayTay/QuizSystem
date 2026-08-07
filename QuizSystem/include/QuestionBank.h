@@ -61,6 +61,8 @@ public:
     bool saveTF(int id, const std::string& prompt, int points,
                 const std::string& correctAnswer,
                 const std::string& filename, std::string& errorMsg);
+
+	void displayAll() const; // Hien thi tat ca cau hoi trong Question Bank
 };
 
 #endif

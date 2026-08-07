@@ -1,6 +1,8 @@
 #include "../include/QuestionBank.h"
 #include <cctype>
 #include <algorithm>
+#include <iostream>
+#include <iomanip>
  
 using namespace std;
  
@@ -252,4 +254,47 @@ bool QuestionBank::saveTF(int id, const string& prompt, int points,
         return false;
     }
     return saveToFile(filename);
+}
+
+//in ra toan bo cac question
+void QuestionBank::displayAll() const {
+    if (questions.empty()) {
+        cout << "Question Bank hiện đang trống." << endl;
+        return;
+    }
+
+    cout << std::left
+        << std::setw(6) << "ID"
+        << std::setw(8) << "Points"
+        << std::setw(10) << "Type"
+        << std::setw(40) << "Prompt"
+        << std::setw(15) << "Correct"
+        << endl;
+	cout << std::string(80, '-') << endl;
+
+    for (const Question* q : questions) {
+		//ep kieu cau hoi MCQ hoac TF
+        const MCQ* mcq = dynamic_cast<const MCQ*>(q);
+        const TF* tf = dynamic_cast<const TF*>(q);
+
+        string type = mcq ? "MCQ" : "TF";
+        string correct = q->getAnswer();
+
+        cout << std::left
+            << std::setw(6) << q->getId()
+            << std::setw(8) << q->getPoints()
+            << std::setw(10) << type
+            << std::setw(40) << q->getPrompt()
+            << std::setw(15) << correct
+            << endl;
+
+		// in them cac lua chon neu la MCQ
+        if (mcq) {
+            char optChar = 'A';
+            for (const auto& opt : mcq->getOptions()) {
+                cout << "   " << optChar++ << ". " << opt << setw(10);
+            }
+			cout << endl;
+        }
+    }
 }

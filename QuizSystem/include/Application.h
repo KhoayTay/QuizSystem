@@ -1,6 +1,8 @@
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
+#include "../include/QuestionBank.h"
+
 class Application {
 public:
 	Application();
@@ -12,6 +14,7 @@ private:
 	void handleTakeQuizMenu();
 	void saveAndExit();
 
+	QuestionBank questionBank_;
 };
 
 #endif

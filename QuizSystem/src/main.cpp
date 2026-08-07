@@ -2,10 +2,16 @@
 //
 
 #include <iostream>
+#include <windows.h>
+
+SetConsoleOutputCP(CP_UTF8); // Set console output code page to UTF-8
+
+#include "../include/Application.h"
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    Application app;
+    app.run();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

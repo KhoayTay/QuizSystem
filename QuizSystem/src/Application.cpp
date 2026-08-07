@@ -6,7 +6,13 @@ using namespace std;
 // Constructor implementation
 Application::Application()
 {
+	vector<string> warnings;
+	int loadedQuestions = questionBank_.loadFromFile("data/questions.txt", warnings);
 
+	cout << "Loaded " << loadedQuestions << " questions from questions.txt." << endl;
+	for (const string& warning : warnings) {
+		cout << "Warning: " << warning << endl;
+	}
 }
 
 void Application::run()
@@ -46,7 +52,7 @@ void Application::run()
 
 void Application::showMainMenu()
 {
-	cout << "Welcome to the Quiz System!" << endl;
+	cout << "==== Welcome to the Quiz System! ====" << endl;
 	cout << "1. Manage Question Bank" << endl;
 	cout << "2. Manage Quizzes" << endl;
 	cout << "3. Take a Quiz" << endl;
@@ -56,8 +62,29 @@ void Application::showMainMenu()
 
 void Application::handleQuestionBankMenu()
 {
-	// Placeholder for question bank management logic
-	cout << "Question Bank Management is not implemented yet." << endl;
+	cout << "===== Question Bank Menu =====" << endl;
+	cout << "1. Display all questions" << endl;
+	cout << "0. Back to main menu" << endl;
+	cout << "Please enter your choice: ";
+
+	int choice;
+	if (!(cin >> choice)) {
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cout << "Invalid input. Please enter a number." << endl;
+		return;
+	}
+
+	switch (choice) {
+	case 1:
+		questionBank_.displayAll();
+		break;
+	case 0:
+		// quay lại menu chính
+		break;
+	default:
+		cout << "Invalid choice. Please try again." << endl;
+	}
 }
 
 void Application::handleQuizMenu()

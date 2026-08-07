@@ -7,20 +7,18 @@ protected:
     int id;
     std::string prompt;
     int points;
-
+    std::string correctAnswer;
 public:
-    Question(int id, const std::string& prompt, int points);
+    Question(int id, const std::string& prompt, int points, const std::string& correctAnswer);
     virtual ~Question() = default;
     virtual void display() const = 0;
 
-    //TF,MCQ answer
-    virtual bool checkAnswer(const std::string& answer) const = 0;
-
-    //QuizEngine
+    //Getter
     int getId() const;
     int getPoints() const;
-    //Getter
+
     std::string getPrompt() const;
+    std::string getAnswer() const;
 
     //Setter
     void setPrompt(const std::string& newPrompt);
