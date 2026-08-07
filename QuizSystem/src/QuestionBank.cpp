@@ -129,8 +129,10 @@ vector<Question*> QuestionBank::findByPromptContains(const string& keyword) cons
     return result;
 }
  
-// Cap nhat prompt/points 
+// Cap nhat prompt/points va du lieu rieng (correctAnswer, options)
 bool QuestionBank::updateQuestion(int id, const string& newPrompt, int newPoints,
+                                   const string& newAnswer,
+                                   const vector<string>& newOptions,
                                    string& errorMsg) {
     int idx = findIndexId(id);
     if (idx == -1) {
@@ -145,10 +147,38 @@ bool QuestionBank::updateQuestion(int id, const string& newPrompt, int newPoints
         errorMsg = "Points phai lon hon 0.";
         return false;
     }
- 
+    if (newAnswer.empty()) {
+        errorMsg = "Dap an khong duoc rong.";
+        return false;
+    }
+
     Question* q = questions[static_cast<size_t>(idx)];
+
+    // Phai dynamic_cast de biet la MCQ hay TF 
+    MCQ* mcq = dynamic_cast<MCQ*>(q);
+    if (mcq != nullptr) {
+        if (newOptions.size() != 4) {
+            errorMsg = "MCQ phai co dung 4 lua chon.";
+            return false;
+        }
+        for (const string& opt : newOptions) {
+            if (opt.empty()) {
+                errorMsg = "Lua chon khong duoc rong.";
+                return false;
+            }
+        }
+        char c = static_cast<char>(toupper(static_cast<unsigned char>(newAnswer[0])));
+        if (newAnswer.size() != 1 || c < 'A' || c > 'D') {
+            errorMsg = "correctOption phai thuoc A-D.";
+            return false;
+        }
+    }
+
     q->setPrompt(newPrompt);
     q->setPoints(newPoints);
+    q->setAnswer(newAnswer);
+    q->setOptions(newOptions);
+
     return true;
 }
  
@@ -215,7 +245,6 @@ bool QuestionBank::saveToFile(const string& filename) const {
         pq.correctAnswers = { q->getAnswer() }; // dung chung cho ca MCQ va TF
 
         // Can dynamic_cast de biet la MCQ hay TF.
-        // Chi dung de xac dinh type/options khi LUU FILE - khong dung cho logic khac
         MCQ* mcq = dynamic_cast<MCQ*>(q);
         if (mcq != nullptr) {
             pq.type = "MCQ";
@@ -238,7 +267,7 @@ bool QuestionBank::saveMCQ(int id, const string& prompt, int points,
                             const string& filename, string& errorMsg) {
     bool added = addMCQ(id, prompt, points, options, correctOption, errorMsg);
     if (!added) {
-        return false; // addMCQ da gan errorMsg, khong can lam gi them
+        return false; 
     }
     return saveToFile(filename);
 }
