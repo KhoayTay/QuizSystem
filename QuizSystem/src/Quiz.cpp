@@ -69,17 +69,8 @@ bool Quiz::isValid() const {
 
 void Quiz::display(std::ostream& output) const {
     output << id_ << '|'
-           << title_ << '|';
-
-    for (std::size_t index = 0; index < questionIds_.size(); ++index) {
-        if (index > 0) {
-            output << ',';
-        }
-
-        output << questionIds_[index];
-    }
-
-    output << '\n';
+           << title_ << '|'
+           << '\n';
 }
 
 bool Quiz::isValidId(int id) {
