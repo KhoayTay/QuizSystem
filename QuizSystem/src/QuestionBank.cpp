@@ -45,7 +45,7 @@ int QuestionBank::indexId(int id) const {
     return -1;
 }
  
-// Them MCQ
+// Them MCQ vào QuestionBank, không lưu vào txt file
 bool QuestionBank::addMCQ(int id, const string& prompt, int points,
                            const vector<string>& options,
                            const string& correctOption, string& errorMsg) {
@@ -93,7 +93,7 @@ bool QuestionBank::addMCQ(int id, const string& prompt, int points,
     return true;
 }
  
-// Them TF
+// Them TF vào QuestionBank, không lưu vào txt file
 bool QuestionBank::addTF(int id, const string& prompt, int points,
                           bool correctAnswer, string& errorMsg) {
     if (static_cast<int>(questions.size()) >= MAX_QUESTIONS) {

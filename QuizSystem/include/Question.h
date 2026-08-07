@@ -7,6 +7,7 @@ protected:
     int id;
     std::string prompt;
     int points;
+	std::string correctAnswer; // For TF and MCQ, store the correct answer as a string
 
 public:
     Question(int id, const std::string& prompt, int points);
@@ -16,11 +17,11 @@ public:
     //TF,MCQ answer
     virtual bool checkAnswer(const std::string& answer) const = 0;
 
-    //QuizEngine
+    //Getter
     int getId() const;
     int getPoints() const;
-    //Getter
     std::string getPrompt() const;
+	virtual std::string getAnswer() const; // For TF and MCQ, return the correct answer as a string
 
     //Setter
     void setPrompt(const std::string& newPrompt);

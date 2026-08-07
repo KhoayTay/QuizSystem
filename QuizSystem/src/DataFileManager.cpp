@@ -150,7 +150,7 @@ vector<ParsedQuiz> DataFileManager::loadQuizzes(const std::string& filename)
 	return result;
 }
 
-//lưu dữ liệu questions vào file questions.txt
+//ghi dữ liệu questions vào file questions.txt
 void DataFileManager::saveQuestions(const std::string& filename, const std::vector<ParsedQuestion>& data)
 {
 	ofstream file(filename);

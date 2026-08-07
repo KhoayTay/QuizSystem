@@ -60,12 +60,14 @@ void Application::handleQuestionBankMenu()
 	cout << "Question Bank Management is not implemented yet." << endl;
 }
 
+//menu danh sách quiz
 void Application::handleQuizMenu()
 {
 	// Placeholder for quiz management logic
 	cout << "Quiz Management is not implemented yet." << endl;
 }
 
+//menu bắt đầu làm bài
 void Application::handleTakeQuizMenu()
 {
 	// Placeholder for taking a quiz logic
