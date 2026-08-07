@@ -11,11 +11,10 @@
 class QuestionBank {
 private:
     std::vector<Question*> questions;
-    std::vector<ParsedQuestion> parsedCache; // Mirror data de luu file
     static const int MAX_QUESTIONS = 100;
 
     bool existsId(int id) const; // Kiem tra ID da ton tai chua
-    int  indexId(int id) const;  // Tim vi tri cua cau hoi theo ID
+    int  findIndexId(int id) const;  // Tim vi tri cua cau hoi theo ID
 
 public:
     QuestionBank();
@@ -51,6 +50,17 @@ public:
 
     // Luu toan bo du lieu hien tai ra file questions.txt qua DataFileManager
     bool saveToFile(const std::string& filename) const;
+
+    // Them MCQ va luu ngay xuong file 
+    bool saveMCQ(int id, const std::string& prompt, int points,
+                 const std::vector<std::string>& options,
+                 const std::string& correctOption,
+                 const std::string& filename, std::string& errorMsg);
+
+    // Them TF va luu ngay xuong file
+    bool saveTF(int id, const std::string& prompt, int points,
+                const std::string& correctAnswer,
+                const std::string& filename, std::string& errorMsg);
 };
 
 #endif

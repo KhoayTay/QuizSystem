@@ -23,11 +23,11 @@ QuestionBank::~QuestionBank() {
  
 // Kiem tra id da ton tai
 bool QuestionBank::existsId(int id) const {
-    return indexId(id) != -1;
+    return findIndexId(id) != -1;
 }
  
 // Tim vi tri cau hoi theo id
-int QuestionBank::indexId(int id) const {
+int QuestionBank::findIndexId(int id) const {
     for (size_t i = 0; i < questions.size(); ++i) {
         if (questions[i]->getId() == id) return static_cast<int>(i);
     }
@@ -112,7 +112,7 @@ bool QuestionBank::addTF(int id, const string& prompt, int points,
  
 // Tim theo ID
 Question* QuestionBank::findById(int id) const {
-    int idx = indexId(id);
+    int idx = findIndexId(id);
     if (idx == -1) return nullptr;
     return questions[static_cast<size_t>(idx)];
 }
@@ -132,7 +132,7 @@ vector<Question*> QuestionBank::findByPromptContains(const string& keyword) cons
 // Cap nhat prompt/points 
 bool QuestionBank::updateQuestion(int id, const string& newPrompt, int newPoints,
                                    string& errorMsg) {
-    int idx = indexId(id);
+    int idx = findIndexId(id);
     if (idx == -1) {
         errorMsg = "Khong tim thay cau hoi co ID " + to_string(id) + ".";
         return false;
@@ -154,7 +154,7 @@ bool QuestionBank::updateQuestion(int id, const string& newPrompt, int newPoints
  
 // Xoa cau hoi theo ID
 bool QuestionBank::removeQuestion(int id) {
-    int idx = indexId(id);
+    int idx = findIndexId(id);
     if (idx == -1) return false;
     delete questions[static_cast<size_t>(idx)];
     questions.erase(questions.begin() + idx);
@@ -201,4 +201,55 @@ int QuestionBank::loadFromFile(const string& filename, vector<string>& warnings)
     }
  
     return loadedCount;
+}
+
+// Luu toan bo Question Bank ra file, convert Question* nguoc lai thanh ParsedQuestion
+bool QuestionBank::saveToFile(const string& filename) const {
+    vector<ParsedQuestion> data;
+
+    for (Question* q : questions) {
+        ParsedQuestion pq;
+        pq.id = q->getId();
+        pq.points = q->getPoints();
+        pq.prompt = q->getPrompt();
+        pq.correctAnswers = { q->getAnswer() }; // dung chung cho ca MCQ va TF
+
+        // Can dynamic_cast de biet la MCQ hay TF.
+        // Chi dung de xac dinh type/options khi LUU FILE - khong dung cho logic khac
+        MCQ* mcq = dynamic_cast<MCQ*>(q);
+        if (mcq != nullptr) {
+            pq.type = "MCQ";
+            pq.options = mcq->getOptions();
+        } else {
+            pq.type = "TF";
+        }
+
+        data.push_back(pq);
+    }
+
+    DataFileManager::saveQuestions(filename, data);
+    return true;
+}
+
+// Them MCQ, neu thanh cong thi luu luon xuong file
+bool QuestionBank::saveMCQ(int id, const string& prompt, int points,
+                            const vector<string>& options,
+                            const string& correctOption,
+                            const string& filename, string& errorMsg) {
+    bool added = addMCQ(id, prompt, points, options, correctOption, errorMsg);
+    if (!added) {
+        return false; // addMCQ da gan errorMsg, khong can lam gi them
+    }
+    return saveToFile(filename);
+}
+
+// Them TF, neu thanh cong thi luu luon xuong file
+bool QuestionBank::saveTF(int id, const string& prompt, int points,
+                           const string& correctAnswer,
+                           const string& filename, string& errorMsg) {
+    bool added = addTF(id, prompt, points, correctAnswer, errorMsg);
+    if (!added) {
+        return false;
+    }
+    return saveToFile(filename);
 }
