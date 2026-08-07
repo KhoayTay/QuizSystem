@@ -12,9 +12,6 @@ public:
     const std::vector<int>& getQuestionIds() const;
     std::size_t getQuestionCount() const;
 
-    bool setTitle(const std::string& title);
-    bool addQuestion(int questionId);
-    bool removeQuestion(int questionId);
     bool containsQuestion(int questionId) const;
     bool isEmpty() const;
     bool isValid() const;
@@ -29,6 +26,10 @@ private:
     friend class QuizManager;
 
     Quiz(int id, const std::string& title);
+
+    bool setTitle(const std::string& title);
+    bool addQuestion(int questionId);
+    bool removeQuestion(int questionId);
 
     int id_;
     std::string title_;
