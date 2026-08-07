@@ -16,13 +16,16 @@ public:
     //TF,MCQ answer
     virtual bool checkAnswer(const std::string& answer) const = 0;
 
-    //QuizEngine
+    //Getter
     int getId() const;
     int getPoints() const;
-    //Getter
+
     std::string getPrompt() const;
+    std::string getAnswer() const;
 
     //Setter
     void setPrompt(const std::string& newPrompt);
     void setPoints(int newPoints);
+    void setAnswer(const std::string& newAnswer);//MCQ,TF
+    virtual void setOptions(const std::vector<std::string>& newOptions) {//MCQ
 };
