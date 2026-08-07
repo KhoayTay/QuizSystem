@@ -26,4 +26,5 @@ public:
     void setPoints(int newPoints);
     void setAnswer(const std::string& newAnswer);//MCQ,TF
     virtual void setOptions(const std::vector<std::string>& newOptions) {//MCQ
+    };
 };
