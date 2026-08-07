@@ -2,8 +2,8 @@
 
 using namespace std;
 
-Question::Question(int id, const string& prompt, int points)
-    : id(id), prompt(prompt), points(points) {
+Question::Question(int id, const string& prompt, int points, const string& correctAnswer)
+    : id(id), prompt(prompt), points(points), correctAnswer(correctAnswer) {
 }
 
 int Question::getId() const {
@@ -24,4 +24,10 @@ void Question::setPrompt(const string& newPrompt) {
 
 void Question::setPoints(int newPoints) {
     points = newPoints;
+}
+string Question::getAnswer() const {
+        return correctAnswer;
+}
+void Question::setAnswer(const std::string& newAnswer) {
+    correctAnswer = newAnswer;
 }
