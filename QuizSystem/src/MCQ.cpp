@@ -3,8 +3,7 @@
 
 using namespace std;
 MCQ::MCQ(int id, const string& prompt, int points, const vector<string>& options, const string& correctAnswerStr)
-    : Question(id, prompt, points, correctAnswerStr), options(options) {
-}
+    : Question(id, prompt, points, correctAnswerStr), options(options) {}
 
 void MCQ::display() const {
     cout << "Câu " << getId() << ": " << prompt << " (" << getPoints() << " diem)\n";
@@ -18,4 +17,8 @@ void MCQ::display() const {
 //getter
 vector<string> MCQ::getOptions() const {
     return options;
+}
+//setter
+void MCQ::setOptions(const vector<string>& newOptions) {
+    options = newOptions;
 }

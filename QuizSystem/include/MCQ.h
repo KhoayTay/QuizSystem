@@ -13,4 +13,5 @@ public:
 
     void display() const override;
     std::vector<std::string> getOptions() const;
+    void setOptions(const std::vector<std::string>& newOptions) override;
 };

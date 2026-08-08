@@ -10,12 +10,12 @@ using namespace std;
 
 QuizEngine::QuizEngine()
     : state_(AttemptState::NOT_STARTED),
-    currentIndex_(0),
-    score_(0)
+      currentIndex_(0),
+      score_(0)
 {
 }
 
-bool QuizEngine::start(const Quiz& quiz, const QuestionBank& questionBank)
+bool QuizEngine::start(const Quiz &quiz, const QuestionBank &questionBank)
 {
     reset();
 
@@ -24,11 +24,11 @@ bool QuizEngine::start(const Quiz& quiz, const QuestionBank& questionBank)
         return false;
     }
 
-    const vector<int>& questionIds = quiz.getQuestionIds();
+    const vector<int> &questionIds = quiz.getQuestionIds();
 
     for (int questionId : questionIds)
     {
-        Question* question = questionBank.findById(questionId);
+        Question *question = questionBank.findById(questionId);
 
         if (question == nullptr)
         {
@@ -79,7 +79,7 @@ bool QuizEngine::previous()
     return true;
 }
 
-bool QuizEngine::answerCurrent(const string& answer)
+bool QuizEngine::answerCurrent(const string &answer)
 {
     if (state_ != AttemptState::IN_PROGRESS || !hasCurrentQuestion())
     {
@@ -149,7 +149,7 @@ void QuizEngine::displayResult() const
     for (size_t index = 0; index < questions_.size(); ++index)
     {
         const bool isCorrect = !answers_[index].empty() &&
-            isCorrectAnswer(answers_[index], questions_[index]->getAnswer());
+                               isCorrectAnswer(answers_[index], questions_[index]->getAnswer());
 
         cout << "Question ID " << questions_[index]->getId()
             << ": " << (isCorrect ? "Correct" : "Incorrect")
@@ -168,7 +168,7 @@ void QuizEngine::displayResult() const
     }
 }
 
-bool QuizEngine::pickAQuiz(const string& quizzesFile, const string& questionsFile)
+bool QuizEngine::pickAQuiz(const string &quizzesFile, const string &questionsFile)
 {
     QuestionBank questionBank;
     vector<string> warnings;
@@ -177,7 +177,7 @@ bool QuizEngine::pickAQuiz(const string& quizzesFile, const string& questionsFil
     if (loadedQuestionCount == 0)
     {
         cout << "Could not load questions from " << questionsFile << ".\n";
-        for (const string& warning : warnings)
+        for (const string &warning : warnings)
         {
             cout << warning << "\n";
         }
@@ -187,7 +187,7 @@ bool QuizEngine::pickAQuiz(const string& quizzesFile, const string& questionsFil
     QuizManager quizManager;
     vector<ParsedQuiz> parsedQuizzes = DataFileManager::loadQuizzes(quizzesFile);
 
-    for (const ParsedQuiz& parsedQuiz : parsedQuizzes)
+    for (const ParsedQuiz &parsedQuiz : parsedQuizzes)
     {
         if (!quizManager.create(parsedQuiz.quizID, parsedQuiz.title))
         {
@@ -211,11 +211,11 @@ bool QuizEngine::pickAQuiz(const string& quizzesFile, const string& questionsFil
     }
 
     cout << "\nAvailable quizzes:\n";
-    const vector<Quiz>& quizzes = quizManager.getQuizzes();
-    for (const Quiz& quiz : quizzes)
+    const vector<Quiz> &quizzes = quizManager.getQuizzes();
+    for (const Quiz &quiz : quizzes)
     {
         cout << quiz.getId() << ". " << quiz.getTitle()
-            << " (" << quiz.getQuestionCount() << " questions)\n";
+             << " (" << quiz.getQuestionCount() << " questions)\n";
     }
 
     cout << "Choose quiz ID: ";
@@ -229,7 +229,7 @@ bool QuizEngine::pickAQuiz(const string& quizzesFile, const string& questionsFil
     }
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    const Quiz* selectedQuiz = quizManager.findQuizById(selectedQuizId);
+    const Quiz *selectedQuiz = quizManager.findQuizById(selectedQuizId);
     if (selectedQuiz == nullptr)
     {
         cout << "Quiz ID was not found.\n";

@@ -26,5 +26,8 @@ void Question::setPoints(int newPoints) {
     points = newPoints;
 }
 string Question::getAnswer() const {
-    return correctAnswer;
+        return correctAnswer;
+}
+void Question::setAnswer(const std::string& newAnswer) {
+    correctAnswer = newAnswer;
 }

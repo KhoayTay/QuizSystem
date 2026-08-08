@@ -20,15 +20,15 @@ class QuizEngine
 public:
     QuizEngine();
 
-    bool start(const Quiz& quiz, const QuestionBank& questionBank);
+    bool start(const Quiz &quiz, const QuestionBank &questionBank);
     bool next();
     bool previous();
-    bool answerCurrent(const std::string& answer);
+    bool answerCurrent(const std::string &answer);
     bool submit();
 
     void displayCurrentQuestion() const;
     void displayResult() const;
-    bool pickAQuiz(const std::string& quizzesFile, const std::string& questionsFile);
+    bool pickAQuiz(const std::string &quizzesFile, const std::string &questionsFile);
 
     AttemptState getState() const;
     int getScore() const;
@@ -37,11 +37,11 @@ public:
 
 private:
     bool hasCurrentQuestion() const;
-    bool isCorrectAnswer(const std::string& userAnswer, const std::string& correctAnswer) const;
+    bool isCorrectAnswer(const std::string &userAnswer, const std::string &correctAnswer) const;
     void reset();
 
     AttemptState state_;
-    std::vector<Question*> questions_;
+    std::vector<Question *> questions_;
     std::vector<std::string> answers_;
     std::size_t currentIndex_;
     int score_;

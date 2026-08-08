@@ -38,8 +38,10 @@ public:
     // Tim theo mot phan prompt, khong phan biet hoa/thuong
     std::vector<Question*> findByPromptContains(const std::string& keyword) const;
 
-    // Cap nhat prompt/points cua cau hoi da ton tai
+    // Cap nhat prompt/points va du lieu rieng cua cau hoi 
     bool updateQuestion(int id, const std::string& newPrompt, int newPoints,
+                         const std::string& newAnswer,
+                         const std::vector<std::string>& newOptions,
                          std::string& errorMsg);
 
     // Xoa cau hoi theo ID
