@@ -168,33 +168,8 @@ void QuizEngine::displayResult() const
     }
 }
 
-bool QuizEngine::pickAQuiz(const string &quizzesFile, const string &questionsFile)
+bool QuizEngine::pickAQuiz(const QuizManager &quizManager, const QuestionBank &questionBank)
 {
-    QuestionBank questionBank;
-    vector<string> warnings;
-    int loadedQuestionCount = questionBank.loadFromFile(questionsFile, warnings);
-
-    if (loadedQuestionCount == 0)
-    {
-        cout << "Could not load questions from " << questionsFile << ".\n";
-        for (const string &warning : warnings)
-        {
-            cout << warning << "\n";
-        }
-        return false;
-    }
-
-    QuizManager quizManager;
-
-    // --- THIS IS THE REFACTORED SECTION ---
-    // Instead of calling DataFileManager directly, we delegate to QuizManager
-    if (!quizManager.loadFromFile(quizzesFile))
-    {
-        cout << "Could not load quizzes from " << quizzesFile << ".\n";
-        cout << quizManager.getLastError() << "\n";
-        return false;
-    }
-
     if (quizManager.isEmpty())
     {
         cout << "No quizzes available to take.\n";
@@ -235,11 +210,11 @@ bool QuizEngine::pickAQuiz(const string &quizzesFile, const string &questionsFil
 
     if (!start(*selectedQuiz, questionBank))
     {
-        cout << "Could not start quiz. Please check question IDs in quizzes.txt.\n";
+        cout << "Could not start quiz. Please check question IDs.\n";
         return false;
     }
 
-    // The rest of the function (the game loop) remains exactly the same!
+    // --- Vòng lặp làm bài thi giữ y nguyên ---
     while (getState() == AttemptState::IN_PROGRESS)
     {
         cout << "\n";

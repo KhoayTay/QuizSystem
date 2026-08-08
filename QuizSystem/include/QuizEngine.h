@@ -3,6 +3,7 @@
 #include "Question.h"
 #include "QuestionBank.h"
 #include "Quiz.h"
+#include "QuizManager.h"
 
 #include <cstddef>
 #include <string>
@@ -28,7 +29,7 @@ public:
 
     void displayCurrentQuestion() const;
     void displayResult() const;
-    bool pickAQuiz(const std::string &quizzesFile, const std::string &questionsFile);
+    bool pickAQuiz(const QuizManager &quizManager, const QuestionBank &questionBank);
 
     AttemptState getState() const;
     int getScore() const;
