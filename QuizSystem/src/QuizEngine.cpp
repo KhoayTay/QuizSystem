@@ -188,12 +188,12 @@ bool QuizEngine::pickAQuiz(const string &quizzesFile, const string &questionsFil
 
     // --- THIS IS THE REFACTORED SECTION ---
     // Instead of calling DataFileManager directly, we delegate to QuizManager
-    if (!quizManager.loadFromFile(quizzesFile))
-    {
-        cout << "Could not load quizzes from " << quizzesFile << ".\n";
-        cout << quizManager.getLastError() << "\n";
-        return false;
-    }
+    //if (!quizManager.loadFromFile(quizzesFile))
+    //{
+    //    cout << "Could not load quizzes from " << quizzesFile << ".\n";
+    //    cout << quizManager.getLastError() << "\n";
+    //    return false;
+    //}
 
     if (quizManager.isEmpty())
     {

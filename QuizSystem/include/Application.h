@@ -2,6 +2,9 @@
 #define APPLICATION_H
 
 #include "../include/QuestionBank.h"
+#include "../include/QuizManager.h"
+#include "../include/QuizEngine.h"
+
 
 class Application {
 public:
@@ -15,6 +18,8 @@ private:
 	void saveAndExit();
 
 	QuestionBank questionBank_;
+	QuizManager quizManager_;
+	QuizEngine quizEngine_;
 };
 
 #endif

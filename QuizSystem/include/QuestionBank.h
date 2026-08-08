@@ -11,7 +11,7 @@
 class QuestionBank {
 private:
     std::vector<Question*> questions;
-    static const int MAX_QUESTIONS = 100;
+    static const int MAX_QUESTIONS = 1000;
 
     bool existsId(int id) const; // Kiem tra ID da ton tai chua
     int  findIndexId(int id) const;  // Tim vi tri cua cau hoi theo ID
