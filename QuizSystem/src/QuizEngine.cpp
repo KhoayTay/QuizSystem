@@ -121,7 +121,7 @@ void QuizEngine::displayCurrentQuestion() const
     }
 
     cout << "Question " << currentIndex_ + 1
-        << "/" << questions_.size() << ":\n";
+         << "/" << questions_.size() << ":\n";
     questions_[currentIndex_]->display();
 
     cout << "Current answer: ";
@@ -152,8 +152,8 @@ void QuizEngine::displayResult() const
                                isCorrectAnswer(answers_[index], questions_[index]->getAnswer());
 
         cout << "Question ID " << questions_[index]->getId()
-            << ": " << (isCorrect ? "Correct" : "Incorrect")
-            << " | Your answer: ";
+             << ": " << (isCorrect ? "Correct" : "Incorrect")
+             << " | Your answer: ";
 
         if (answers_[index].empty())
         {
@@ -185,28 +185,19 @@ bool QuizEngine::pickAQuiz(const string &quizzesFile, const string &questionsFil
     }
 
     QuizManager quizManager;
-    vector<ParsedQuiz> parsedQuizzes = DataFileManager::loadQuizzes(quizzesFile);
 
-    for (const ParsedQuiz &parsedQuiz : parsedQuizzes)
+    // --- THIS IS THE REFACTORED SECTION ---
+    // Instead of calling DataFileManager directly, we delegate to QuizManager
+    if (!quizManager.loadFromFile(quizzesFile))
     {
-        if (!quizManager.create(parsedQuiz.quizID, parsedQuiz.title))
-        {
-            cout << quizManager.getLastError() << "\n";
-            continue;
-        }
-
-        for (int questionId : parsedQuiz.questionIDs)
-        {
-            if (!quizManager.addQuestion(parsedQuiz.quizID, questionId))
-            {
-                cout << quizManager.getLastError() << "\n";
-            }
-        }
+        cout << "Could not load quizzes from " << quizzesFile << ".\n";
+        cout << quizManager.getLastError() << "\n";
+        return false;
     }
 
     if (quizManager.isEmpty())
     {
-        cout << "Could not load quizzes from " << quizzesFile << ".\n";
+        cout << "No quizzes available to take.\n";
         return false;
     }
 
@@ -248,6 +239,7 @@ bool QuizEngine::pickAQuiz(const string &quizzesFile, const string &questionsFil
         return false;
     }
 
+    // The rest of the function (the game loop) remains exactly the same!
     while (getState() == AttemptState::IN_PROGRESS)
     {
         cout << "\n";
@@ -333,7 +325,7 @@ bool QuizEngine::hasCurrentQuestion() const
     return !questions_.empty() && currentIndex_ < questions_.size();
 }
 
-bool QuizEngine::isCorrectAnswer(const string& userAnswer, const string& correctAnswer) const
+bool QuizEngine::isCorrectAnswer(const string &userAnswer, const string &correctAnswer) const
 {
     string user = userAnswer;
     string correct = correctAnswer;
@@ -354,12 +346,12 @@ bool QuizEngine::isCorrectAnswer(const string& userAnswer, const string& correct
     }
     correct = correct.substr(first, last - first + 1);
 
-    for (char& c : user)
+    for (char &c : user)
     {
         c = static_cast<char>(tolower(static_cast<unsigned char>(c)));
     }
 
-    for (char& c : correct)
+    for (char &c : correct)
     {
         c = static_cast<char>(tolower(static_cast<unsigned char>(c)));
     }
