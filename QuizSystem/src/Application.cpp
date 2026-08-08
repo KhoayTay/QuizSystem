@@ -191,7 +191,7 @@ void Application::handleQuizMenu()
 
 void Application::handleTakeQuizMenu()
 {
-	quizEngine_.pickAQuiz("data/quizzes.txt", "data/questions.txt");
+	quizEngine_.pickAQuiz(quizManager_, questionBank_);
 
 }
 
