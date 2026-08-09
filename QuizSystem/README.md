@@ -5,33 +5,36 @@
 ## Cấu trúc thư mục
 
 Dự án được phân tách rõ ràng thành các module theo nguyên tắc Single Responsibility Principle (SRP):
+
+```text
 QuizSystem/
 ├── CMakeLists.txt # File cấu hình biên dịch tự động bằng CMake
 ├── README.md # Tài liệu hướng dẫn (file này)
 ├── data/ # Thư mục chứa dữ liệu tĩnh
-│ ├── questions.txt # File lưu trữ ngân hàng câu hỏi (định dạng text)
-│ └── quizzes.txt # File lưu trữ danh sách đề thi (định dạng text)
+│   ├── questions.txt # File lưu trữ ngân hàng câu hỏi (định dạng text)
+│   └── quizzes.txt # File lưu trữ danh sách đề thi (định dạng text)
 ├── include/ # Thư mục chứa file định nghĩa Header (.h)
-│ ├── Application.h # Điều phối luồng ứng dụng và giao diện người dùng
-│ ├── DataFileManager.h # Module đọc/ghi dữ liệu từ file văn bản
-│ ├── MCQ.h # Kế thừa lớp Question, xử lý câu trắc nghiệm 4 lựa chọn
-│ ├── Question.h # Abstract Base Class cho cấu trúc câu hỏi
-│ ├── QuestionBank.h # Quản lý vòng đời và tìm kiếm câu hỏi
-│ ├── Quiz.h # Đại diện cho dữ liệu của một bài thi cụ thể
-│ ├── QuizEngine.h # Điều khiển vòng đời của một lần làm bài (Attempt)
-│ ├── QuizManager.h # Quản lý danh sách các bài thi (Quiz)
-│ └── TF.h # Kế thừa lớp Question, xử lý câu hỏi Đúng/Sai (True/False)
+│   ├── Application.h # Điều phối luồng ứng dụng và giao diện người dùng
+│   ├── DataFileManager.h # Module đọc/ghi dữ liệu từ file văn bản
+│   ├── MCQ.h # Kế thừa lớp Question, xử lý câu trắc nghiệm 4 lựa chọn
+│   ├── Question.h # Abstract Base Class cho cấu trúc câu hỏi
+│   ├── QuestionBank.h # Quản lý vòng đời và tìm kiếm câu hỏi
+│   ├── Quiz.h # Đại diện cho dữ liệu của một bài thi cụ thể
+│   ├── QuizEngine.h # Điều khiển vòng đời của một lần làm bài (Attempt)
+│   ├── QuizManager.h # Quản lý danh sách các bài thi (Quiz)
+│   └── TF.h # Kế thừa lớp Question, xử lý câu hỏi Đúng/Sai (True/False)
 └── src/ # Thư mục chứa mã nguồn thực thi (.cpp)
-├── Application.cpp
-├── DataFileManager.cpp
-├── MCQ.cpp
-├── Question.cpp
-├── QuestionBank.cpp
-├── Quiz.cpp
-├── QuizEngine.cpp
-├── QuizManager.cpp
-├── TF.cpp
-└── main.cpp # Điểm khởi chạy của chương trình (khởi tạo dependencies)
+    ├── Application.cpp
+    ├── DataFileManager.cpp
+    ├── MCQ.cpp
+    ├── Question.cpp
+    ├── QuestionBank.cpp
+    ├── Quiz.cpp
+    ├── QuizEngine.cpp
+    ├── QuizManager.cpp
+    ├── TF.cpp
+    └── main.cpp # Điểm khởi chạy của chương trình (khởi tạo dependencies)
+```
 
 ## Các giới hạn đã chọn (Assumptions & Limitations)
 
