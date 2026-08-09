@@ -209,6 +209,7 @@ void Application::handleQuestionBankMenu()
 		}
 		else {
 			cout << "Question removed successfully." << endl;
+			quizManager_.removeQuestionFromAllQuizzes(removeId);
 		}
 		break;
 	}	// case 4 Question Menu

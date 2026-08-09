@@ -159,7 +159,7 @@ std::size_t QuizManager::removeQuestionFromAllQuizzes(int questionId) {
     for (std::vector<Quiz>::iterator quiz = quizzes_.begin();
          quiz != quizzes_.end();
          ++quiz) {
-        if (quiz->removeQuestion(questionId)) {
+        if (QuizManager::removeQuestion(quiz->getId(), questionId)) {
             ++affectedQuizCount;
         }
     }
