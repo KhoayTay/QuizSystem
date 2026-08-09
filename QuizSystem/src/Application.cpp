@@ -183,7 +183,7 @@ void Application::handleQuestionBankMenu()
 				cout << "Option " << static_cast<char>('A' + i) << ": ";
 				getline(cin, newOptions[i]);
 			}
-			cout << "Enter new correct option (A-D): "; getline(cin, newAnswer);
+			cout << "Enter new correct option (A-D): ";
 			getline(cin, newAnswer);
 		}
 		else {
