@@ -68,8 +68,9 @@ bool Quiz::isValid() const {
 }
 
 void Quiz::display(std::ostream& output) const {
-    output << id_ << '|'
-           << title_ << '|'
+    output << "ID: " << id_
+           << " | Title: " << title_
+           << " | Questions: " << getQuestionCount()
            << '\n';
 }
 
