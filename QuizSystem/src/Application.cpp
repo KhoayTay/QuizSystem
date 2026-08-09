@@ -14,7 +14,7 @@ Application::Application()
 	int loadedQuizzes = quizManager_.loadFromFile("data/quizzes.txt");
 
 	cout << "Loaded " << loadedQuestions << " questions from questions.txt." << endl;
-	cout << "Loaded " << loadedQuizzes << " quizzes from quizzes.txt." << endl;
+	cout << "Loaded all quizzes from quizzes.txt." << endl;
 	for (const string& warning : warnings) {
 		cout << "Warning: " << warning << endl;
 	}
