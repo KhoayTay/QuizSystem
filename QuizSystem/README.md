@@ -36,6 +36,34 @@ QuizSystem/
     └── main.cpp # Điểm khởi chạy của chương trình (khởi tạo dependencies)
 ```
 
+## Sơ đồ Kiến trúc Hệ thống (Dependency Graph)
+
+```mermaid
+graph TD
+    Main[main.cpp] --> App[Application]
+
+    App --> QB[QuestionBank]
+    App --> QM[QuizManager]
+    App --> QE[QuizEngine]
+
+    QB --> DFM[DataFileManager]
+    QM --> DFM[DataFileManager]
+
+    QB -- Quản lý mảng con trỏ --> Q[Question Base]
+    QM -- Quản lý danh sách ID --> QZ[Quiz]
+
+    MCQ -- Kế thừa --> Q
+    TF -- Kế thừa --> Q
+
+    QB -- Cấp phát động --> MCQ
+    QB -- Cấp phát động --> TF
+
+    QE -. Truy cập danh sách đề thi .-> QM
+    QE -. Mượn con trỏ câu hỏi .-> QB
+    QE -- Lưu trữ ID & duyệt --> QZ
+    QE -- Gọi display và getAnswer --> Q
+```
+
 ## Các giới hạn đã chọn (Assumptions & Limitations)
 
 Dự án được xây dựng với một số giả định và giới hạn để phù hợp với ngữ cảnh của một Console Application:
