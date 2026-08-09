@@ -74,7 +74,6 @@ Dự án được xây dựng với một số giả định và giới hạn đ
 - Mô phỏng thi: Hệ thống tập trung vào logic duyệt câu hỏi và chấm điểm; không có đồng hồ đếm ngược (real-time timer).
 - Quản lý người dùng: Hệ thống không yêu cầu người dùng đăng nhập hay lưu lịch sử của một phiên làm bài đã diễn ra.
 - Xử lý ngoại lệ: Chương trình ưu tiên xử lý luồng bằng vòng lặp và thông báo, không áp dụng exception handling phức tạp.
-- Quản lý bộ nhớ: QuestionBank đóng vai trò là chủ sở hữu (owner) và quản lý bộ nhớ của các con trỏ cấp phát động; Quiz và QuizEngine chỉ sử dụng tham chiếu mà không trực tiếp quản lý giải phóng.
 
 ## Cách Build và Chạy chương trình
 
