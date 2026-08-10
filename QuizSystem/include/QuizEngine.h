@@ -2,7 +2,6 @@
 
 #include "Question.h"
 #include "QuestionBank.h"
-#include "Quiz.h"
 #include "QuizManager.h"
 
 #include <cstddef>
