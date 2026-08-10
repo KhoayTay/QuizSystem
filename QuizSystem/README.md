@@ -45,12 +45,12 @@ graph TD
     App --> QB[QuestionBank]
     App --> QM[QuizManager]
     App --> QE[QuizEngine]
+    QM -- Quản lý danh sách ID --> QZ[Quiz]
 
     QB --> DFM[DataFileManager]
     QM --> DFM[DataFileManager]
 
     QB -- Quản lý mảng con trỏ --> Q[Question Base]
-    QM -- Quản lý danh sách ID --> QZ[Quiz]
 
     MCQ -- Kế thừa --> Q
     TF -- Kế thừa --> Q
@@ -60,8 +60,9 @@ graph TD
 
     QE -. Truy cập danh sách đề thi .-> QM
     QE -. Mượn con trỏ câu hỏi .-> QB
-    QE -- Lưu trữ ID & duyệt --> QZ
     QE -- Gọi display và getAnswer --> Q
+
+    DFM -- Thực hiện giao tiếp I/O --> TBD[text-based Data]
 ```
 
 ## Các giới hạn đã chọn (Assumptions & Limitations)
