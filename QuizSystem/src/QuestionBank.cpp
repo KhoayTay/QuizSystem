@@ -107,6 +107,14 @@ bool QuestionBank::addTF(int id, const string& prompt, int points,
         errorMsg = "Points phai lon hon 0.";
         return false;
     }
+	if (correctAnswer.empty()) {
+		errorMsg = "correctAnswer khong duoc rong.";
+		return false;
+	}
+	if (correctAnswer != "True" && correctAnswer != "False" && correctAnswer != "true" && correctAnswer != "false") {
+		errorMsg = "correctAnswer phai la 'True' hoac 'False'.";
+		return false;
+	}
 
     questions.push_back(new TF(id, prompt, points, correctAnswer));
     return true;
